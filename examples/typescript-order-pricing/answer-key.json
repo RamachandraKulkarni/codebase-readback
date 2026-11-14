@@ -1,0 +1,32 @@
+{
+  "surface": ["src/index.ts: quoteOrder, formatQuote and the Order, OrderLine and Quote types"],
+  "entries": [
+    { "file": "src/pricing.ts", "match": "enableRounding: true", "group": "Too much", "action": "fix", "why": "An option that only ever has one value" },
+    { "file": "src/pricing.ts", "match": "export interface IPriceCalculator", "group": "Too much", "action": "fix", "why": "An interface with one implementation" },
+    { "file": "src/pricing.ts", "match": "export class PriceCalculatorFactory", "group": "Too much", "action": "fix", "why": "A factory that builds one type" },
+    { "file": "src/pricing.ts", "match": "debug: boolean): Quote {", "group": "Too much", "action": "fix", "why": "A parameter that is never read" },
+    { "file": "src/pricing.ts", "match": "if (order === null || order === undefined)", "group": "Too much", "action": "fix", "why": "A check repeated below the edge where the order was already validated" },
+    { "file": "src/pricing.ts", "match": "if (internalOrder === null || internalOrder === undefined)", "group": "Too much", "action": "fix", "why": "A check on a value built one line above" },
+    { "file": "src/pricing.ts", "match": "function sumArray", "group": "Too much", "action": "fix", "why": "A helper that rebuilds reduce" },
+    { "file": "src/pricing.ts", "match": "const data = subtotalCents * 0.1;", "group": "Too much", "action": "fix", "why": "Three blocks that differ by one value, each holding a variable named data" },
+    { "file": "src/pricing.ts", "match": "export function calculateLegacyTotal", "group": "Too much", "action": "fix", "why": "Nothing calls it and index.ts does not export it" },
+    { "file": "src/pricing.ts", "match": "function getTotal(order: Order)", "group": "Too much", "action": "fix", "why": "A wrapper that only passes its argument on" },
+    { "file": "src/orderMapper.ts", "match": "export function mapOrderToInternalOrder", "group": "Too much", "action": "fix", "why": "A layer that converts a shape into the same shape" },
+    { "file": "src/pricing_old.ts", "match": "getVolumeDiscountCentsOld", "group": "Too much", "action": "fix", "why": "An old file kept next to its replacement, with no callers" },
+    { "file": "src/pricing.ts", "match": "exact - floor === 0.5 ?", "group": "Too packed", "action": "fix", "why": "A ternary inside a ternary" },
+    { "file": "src/pricing.ts", "match": "return \"Subtotal: $\"", "group": "Too packed", "action": "fix", "why": "Four values formatted the same way on one line" },
+    { "file": "src/pricing.ts", "match": "const temp: number[] = []", "group": "Names", "action": "fix", "why": "A name that says nothing about the use" },
+    { "file": "src/pricing.ts", "match": "const obj = JSON.parse", "group": "Names", "action": "fix", "why": "A name that says nothing about the use" },
+    { "file": "src/orderMapper.ts", "match": "(l) =>", "group": "Names", "action": "fix", "why": "A single letter" },
+    { "file": "src/pricing.ts", "match": "} catch (e) {", "group": "Errors", "action": "report", "why": "A swallowed error. A coupon over 100 percent gives zero tax and a negative total" },
+    { "file": "src/pricing.ts", "match": "// Calculate the subtotal", "group": "Comments", "action": "fix", "why": "Says what the next lines plainly say" },
+    { "file": "src/pricing.ts", "match": "// Apply the coupon", "group": "Comments", "action": "fix", "why": "Says what the next lines plainly say" },
+    { "file": "src/pricing.ts", "match": "// Updated per review", "group": "Comments", "action": "fix", "why": "A note about the conversation. The rule about ACME in the same comment stays" },
+    { "file": "src/pricing.ts", "match": "// Helper function to sum", "group": "Comments", "action": "fix", "why": "Explains a name" },
+    { "file": "src/orderMapper.ts", "match": "// Maps the order to the internal order", "group": "Comments", "action": "fix", "why": "Repeats the function name" },
+    { "file": "src/pricing.ts", "match": "internalOrder.customerId === \"ACME\"", "group": "Special cases", "action": "count", "why": "An if for one customer" },
+    { "file": "src/pricing.ts", "match": "as any", "group": "Special cases", "action": "count", "why": "A type check that is forced past" },
+    { "file": "src/pricing.ts", "match": "// The tax service rounds half to even", "group": "Leave alone", "action": "leave", "why": "A comment about a system outside the code" },
+    { "file": "src/pricing.ts", "match": "throw new Error(\"customerId is required\")", "group": "Leave alone", "action": "leave", "why": "A check at the edge, where outside input arrives" }
+  ]
+}
