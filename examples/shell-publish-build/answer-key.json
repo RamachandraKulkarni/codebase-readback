@@ -1,0 +1,23 @@
+{
+  "surface": ["The arguments, the exit code, what is printed, and every request sent to the deploy service"],
+  "entries": [
+    { "file": "publish-build.sh", "match": ") || true; names+=", "group": "Too much", "action": "fix", "why": "A guard on a command that cannot fail once the artifact is known to exist" },
+    { "file": "publish-build.sh", "match": "#!/usr/bin/env bash", "group": "Too packed", "action": "fix", "why": "A script that runs top to bottom with no named steps" },
+    { "file": "publish-build.sh", "match": "#   1. Checks the arguments.", "group": "Too packed", "action": "fix", "why": "A header that lists the steps because the code does not show them" },
+    { "file": "publish-build.sh", "match": "do case", "group": "Too packed", "action": "fix", "why": "A whole loop and case on one line" },
+    { "file": "publish-build.sh", "match": "== staging ||", "group": "Too packed", "action": "fix", "why": "Three separate checks joined into one, with one message for all of them" },
+    { "file": "publish-build.sh", "match": "sum=$(sha256sum", "group": "Too packed", "action": "fix", "why": "Five statements on one line" },
+    { "file": "publish-build.sh", "match": "slug=$(basename", "group": "Too packed", "action": "fix", "why": "A pipeline of six stages on one line" },
+    { "file": "publish-build.sh", "match": "-X POST", "group": "Too packed", "action": "fix", "why": "JSON built by hand with escaped quotes" },
+    { "file": "publish-build.sh", "match": "do sleep", "group": "Too packed", "action": "fix", "why": "A whole polling loop on one line" },
+    { "file": "publish-build.sh", "match": "n=0; state=pending", "group": "Names", "action": "fix", "why": "A single letter for the number of checks made" },
+    { "file": "publish-build.sh", "match": "86400", "group": "Names", "action": "fix", "why": "A number whose meaning is not on the page" },
+    { "file": "publish-build.sh", "match": "-lt 5", "group": "Names", "action": "fix", "why": "A number whose meaning is not on the page" },
+    { "file": "publish-build.sh", "match": "&& echo \"PUBLISHED", "group": "Flow", "action": "fix", "why": "An and-or chain standing in for an if and else" },
+    { "file": "publish-build.sh", "match": "export BUILD_ID=$(curl", "group": "Errors", "action": "report", "why": "export hides a failed registration. The script then prints PUBLISHED with an empty build id and exits 0" },
+    { "file": "publish-build.sh", "match": "|| state=pending", "group": "Errors", "action": "report", "why": "A failed status request is replaced by a default value" },
+    { "file": "publish-build.sh", "match": "POLL_SECONDS:-2", "group": "Special cases", "action": "count", "why": "A sleep and a retry" },
+    { "file": "publish-build.sh", "match": "names=() results=() details=()", "group": "Leave alone", "action": "leave", "why": "Lists read by one index, in a language with no records" },
+    { "file": "publish-build.sh", "match": "# The deploy service rejects", "group": "Leave alone", "action": "leave", "why": "A comment about a system outside the code" }
+  ]
+}
