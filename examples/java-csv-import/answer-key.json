@@ -1,0 +1,31 @@
+{
+  "surface": ["CsvImportService, CustomerStore, AuditLog and the Customer and ImportResult records"],
+  "entries": [
+    { "file": "src/main/java/com/example/csvimport/CsvImportService.java", "match": "if (strLine != null) {", "group": "Too much", "action": "fix", "why": "split never returns a null element" },
+    { "file": "src/main/java/com/example/csvimport/CsvImportService.java", "match": "ImportHelper.isNullOrEmpty(strLine)", "group": "Too much", "action": "fix", "why": "A helper that rebuilds String.isBlank" },
+    { "file": "src/main/java/com/example/csvimport/ImportHelper.java", "match": "public class ImportHelper", "group": "Too much", "action": "fix", "why": "A class that exists for one call the language already covers" },
+    { "file": "src/main/java/com/example/csvimport/CsvImportServiceV2.java", "match": "public class CsvImportServiceV2", "group": "Too much", "action": "fix", "why": "A replacement file with no callers" },
+    { "file": "src/main/java/com/example/csvimport/CsvImportService.java", "match": "ImportResult result = new ImportResult", "group": "Too much", "action": "fix", "why": "A variable that is returned on the next line" },
+    { "file": "src/main/java/com/example/csvimport/CsvImportService.java", "match": "s.length() - 1) {", "group": "Too packed", "action": "fix", "why": "A condition with three parts" },
+    { "file": "src/main/java/com/example/csvimport/CsvImportService.java", "match": "? 3 : t.equals", "group": "Too packed", "action": "fix", "why": "Ternaries inside a ternary, with tiers as bare numbers" },
+    { "file": "src/main/java/com/example/csvimport/CsvImportService.java", "match": "boolean flag) {", "group": "Names", "action": "fix", "why": "A boolean that does not read as true or false" },
+    { "file": "src/main/java/com/example/csvimport/CsvImportService.java", "match": "List<String> listErrors", "group": "Names", "action": "fix", "why": "A name that states the type" },
+    { "file": "src/main/java/com/example/csvimport/CsvImportService.java", "match": "int intImported = 0;", "group": "Names", "action": "fix", "why": "A name that states the type" },
+    { "file": "src/main/java/com/example/csvimport/CsvImportService.java", "match": "String[] arr = csvText.split", "group": "Names", "action": "fix", "why": "A name that says nothing about the use" },
+    { "file": "src/main/java/com/example/csvimport/CsvImportService.java", "match": "String s = parts[0]", "group": "Names", "action": "fix", "why": "Single letters for the email, the name and the tier" },
+    { "file": "src/main/java/com/example/csvimport/CsvImportService.java", "match": "tier == 3 ? 365 : 90", "group": "Names", "action": "fix", "why": "Numbers whose meaning is not on the page" },
+    { "file": "src/main/java/com/example/csvimport/CsvImportService.java", "match": "public int getCount() {", "group": "Names", "action": "report", "why": "A getter that also resets the count. The name is public, so it stays" },
+    { "file": "src/main/java/com/example/csvimport/CsvImportService.java", "match": "public ImportResult process(", "group": "Shape", "action": "fix", "why": "One method that splits, validates, saves and counts" },
+    { "file": "src/main/java/com/example/csvimport/CsvImportService.java", "match": "hasHeader = true;", "group": "Flow", "action": "fix", "why": "A flag set here and tested far below" },
+    { "file": "src/main/java/com/example/csvimport/CsvImportService.java", "match": "if (!(i == 0 && hasHeader)) {", "group": "Flow", "action": "fix", "why": "Nesting eight levels deep where early exits would keep the main path at the left" },
+    { "file": "src/main/java/com/example/csvimport/CsvImportService.java", "match": "} catch (Exception e) {", "group": "Errors", "action": "report", "why": "A swallowed error. A failed save is not imported, not skipped and not listed" },
+    { "file": "src/main/java/com/example/csvimport/CsvImportService.java", "match": "strLine.split(\",\")", "group": "Errors", "action": "report", "why": "A quoted comma splits a name in two and the row is refused" },
+    { "file": "src/main/java/com/example/csvimport/CsvImportService.java", "match": " * CsvImportService class.", "group": "Comments", "action": "fix", "why": "A doc block that repeats the name" },
+    { "file": "src/main/java/com/example/csvimport/CsvImportService.java", "match": "     * Constructor.", "group": "Comments", "action": "fix", "why": "A doc block that repeats the signature" },
+    { "file": "src/main/java/com/example/csvimport/CsvImportService.java", "match": "// loop through the lines", "group": "Comments", "action": "fix", "why": "Says what the next line plainly says" },
+    { "file": "src/main/java/com/example/csvimport/CsvImportService.java", "match": "// count = count + intImported + intSkipped;", "group": "Comments", "action": "fix", "why": "Code that is commented out" },
+    { "file": "src/main/java/com/example/csvimport/CsvImportService.java", "match": "// do nothing", "group": "Special cases", "action": "count", "why": "A swallowed error" },
+    { "file": "src/main/java/com/example/csvimport/CsvImportService.java", "match": "// Excel exports start with a byte order mark", "group": "Leave alone", "action": "leave", "why": "A comment about a system outside the code" },
+    { "file": "src/main/java/com/example/csvimport/CsvImportService.java", "match": "// The auditors require an entry", "group": "Leave alone", "action": "leave", "why": "The order of side effects, with the reason stated" }
+  ]
+}
