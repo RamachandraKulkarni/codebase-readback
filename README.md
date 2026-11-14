@@ -14,6 +14,14 @@ Status: in development. Progress is tracked in [tasks/todo.md](tasks/todo.md).
 4. Rewrite in ordered passes, one commit each, with the locked tests run after every pass
 5. Report what changed, the proof, and any bugs found and left untouched
 
+## What is guaranteed
+
+Behavior is identical on everything the locked tests cover, and the strength of that lock is measured by mutation score. That is tested equivalence, not proven equivalence. Performance and concurrency are outside the guarantee.
+
 ## Languages
 
 Java, TypeScript and shell in the first version.
+
+## License
+
+Apache-2.0. See [LICENSE](LICENSE).

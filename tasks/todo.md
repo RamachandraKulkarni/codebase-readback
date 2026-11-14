@@ -12,23 +12,35 @@
 - 2026-11-13 Defaults: mutation score 80% on the target or every survivor explained, Vitest and JUnit 5 as primary runners
 - 2026-11-13 Ideas borrowed from caldoai/untangle-codebase and lookalikes are rewritten in our own words
 - 2026-11-13 Commits are authored as Ram, with no AI attribution
+- 2026-11-13 Target is enterprise grade: a reviewer who distrusts the agent can still trust the result
+- 2026-11-13 License: Apache-2.0
+- 2026-11-13 The guarantee is stated exactly: identical on the locked behaviors, lock strength measured by mutation score. Performance and concurrency are outside it
+- 2026-11-13 Not building: dashboards, a hosted service, multi-agent orchestration, auto-merge
 
 ## Milestones
 
-- [ ] 1. Signs catalog and deliberately sloppy example modules
+- [ ] 1. Signs catalog and deliberately sloppy examples with answer keys
   - [x] references/signs.md first draft
   - [ ] signs.md reviewed by Ram
-  - [ ] examples/ sloppy Java module
-  - [ ] examples/ sloppy TypeScript module
-  - [ ] examples/ sloppy shell script (written fresh, not taken from any work codebase)
-- [ ] 2. Lock: references/lock.md and the gate scripts, TypeScript first, then Java, then shell
-- [ ] 3. SKILL.md with the run flow and the passes
-- [ ] 4. Evals on seeded fixtures: gate pass rate and readability change
-- [ ] 5. Report script and README
+  - [x] examples/typescript-order-pricing, 27 key entries
+  - [x] examples/java-csv-import, 26 key entries
+  - [x] examples/shell-publish-build, 18 key entries, written fresh
+  - [x] evals/check-answer-keys.mjs
+  - [ ] Build files for the Java and TypeScript examples, added with the lock toolkit
+- [ ] 2. Lock toolkit: surface, freeze, record, gate, with TypeScript, Java and shell adapters
+  - [ ] Surface diff from the compiler: tsc declarations, javap
+  - [ ] Old versus new on generated inputs for pure functions
+  - [ ] Recorded behavior for code with I/O
+  - [ ] Baseline parity: compile, typecheck, lint, test count, skipped counts as red
+- [ ] 3. Proof manifest readback.json, verify command, GitHub Action that rechecks without the agent
+- [ ] 4. Policy file .readback.yml, enforced by the scripts
+- [ ] 5. SKILL.md run flow with resumable state in .readback/
+- [ ] 6. Evals: audit accuracy against the answer keys, and catch rate on planted bad refactors
+- [ ] 7. Packaging: plugin manifest, versioning, changelog, SECURITY.md, docs
 
 ## Open questions
 
-- License. The repo was created without one. MIT was the suggestion
+- Review flow: pull requests per milestone, or direct merges to main
 
 ## Findings from the shell trial
 
