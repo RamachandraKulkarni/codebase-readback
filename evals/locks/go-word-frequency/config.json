@@ -1,0 +1,31 @@
+{
+  "adapter": "generic",
+  "targets": [
+    "main.go"
+  ],
+  "surface": {
+    "extractor": "tree-sitter",
+    "language": "go",
+    "entries": [
+      "main.go"
+    ],
+    "names": [
+      "CountWords"
+    ]
+  },
+  "checks": {
+    "compile": "mkdir -p .readback/bin && go build -o .readback/bin/wordfreq .",
+    "scenarios": "readback-test/scenarios.json"
+  },
+  "mutation": {
+    "line_comments": [
+      "//"
+    ],
+    "comment_word_boundary": false,
+    "quotes": [
+      "\"",
+      "`",
+      "'"
+    ]
+  }
+}

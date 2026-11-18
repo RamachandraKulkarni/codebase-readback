@@ -1,0 +1,9 @@
+{
+  "adapter": "shell",
+  "targets": [
+    "publish-build.sh"
+  ],
+  "checks": {
+    "scenarios": "readback-test/scenarios.json"
+  }
+}

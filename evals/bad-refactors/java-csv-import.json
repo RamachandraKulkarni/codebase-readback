@@ -1,0 +1,44 @@
+[
+  {
+    "name": "isBlank instead of trim().isEmpty()",
+    "file": "src/main/java/com/example/csvimport/CsvImportService.java",
+    "find": "if (line.trim().isEmpty()) {",
+    "replace": "if (line.isBlank()) {"
+  },
+  {
+    "name": "audit entry written after the save",
+    "file": "src/main/java/com/example/csvimport/CsvImportService.java",
+    "find": "            auditLog.record(\"import \" + customer.email());\n            if (store.exists(customer.email()) && !replaceExistingCustomers) {\n                return ImportOutcome.SKIPPED;\n            }\n            store.save(customer);",
+    "replace": "            if (store.exists(customer.email()) && !replaceExistingCustomers) {\n                auditLog.record(\"import \" + customer.email());\n                return ImportOutcome.SKIPPED;\n            }\n            store.save(customer);\n            auditLog.record(\"import \" + customer.email());"
+  },
+  {
+    "name": "tier names matched case-insensitively",
+    "file": "src/main/java/com/example/csvimport/CsvImportService.java",
+    "find": "return switch (tierName) {",
+    "replace": "return switch (tierName.toLowerCase()) {"
+  },
+  {
+    "name": "email may start with @",
+    "file": "src/main/java/com/example/csvimport/CsvImportService.java",
+    "find": "return 0 < atSignIndex && atSignIndex < email.length() - 1;",
+    "replace": "return 0 <= atSignIndex && atSignIndex < email.length() - 1;"
+  },
+  {
+    "name": "header detected by exact text",
+    "file": "src/main/java/com/example/csvimport/CsvImportService.java",
+    "find": "boolean hasHeader = lines[0].toLowerCase().startsWith(\"email\");",
+    "replace": "boolean hasHeader = lines[0].equalsIgnoreCase(\"email,name,tier\");"
+  },
+  {
+    "name": "count also adds skipped rows",
+    "file": "src/main/java/com/example/csvimport/CsvImportService.java",
+    "find": "importedSinceLastCount += importedCount;",
+    "replace": "importedSinceLastCount += importedCount + skippedCount;"
+  },
+  {
+    "name": "getCount no longer resets",
+    "file": "src/main/java/com/example/csvimport/CsvImportService.java",
+    "find": "        importedSinceLastCount = 0;\n        return importedCount;",
+    "replace": "        return importedCount;"
+  }
+]

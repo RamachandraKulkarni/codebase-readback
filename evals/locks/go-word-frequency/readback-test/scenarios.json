@@ -1,0 +1,108 @@
+{
+  "command": [
+    ".readback/bin/wordfreq"
+  ],
+  "copy": [
+    ".readback/bin"
+  ],
+  "scenarios": [
+    {
+      "name": "default top three",
+      "stdin": "The cat and the hat.\nThe cat's 'quoted' word, and THE end\n"
+    },
+    {
+      "name": "top four",
+      "args": [
+        "4"
+      ],
+      "stdin": "The cat and the hat.\nThe cat's 'quoted' word, and THE end\n"
+    },
+    {
+      "name": "top ten with minimum length four",
+      "args": [
+        "10",
+        "4"
+      ],
+      "stdin": "The cat and the hat.\nThe cat's 'quoted' word, and THE end\n"
+    },
+    {
+      "name": "ties sort alphabetically",
+      "args": [
+        "10"
+      ],
+      "stdin": "b a c b a c d\n"
+    },
+    {
+      "name": "zero keeps the default",
+      "args": [
+        "0"
+      ],
+      "stdin": "The cat and the hat.\nThe cat's 'quoted' word, and THE end\n"
+    },
+    {
+      "name": "negative keeps the default",
+      "args": [
+        "-2"
+      ],
+      "stdin": "The cat and the hat.\nThe cat's 'quoted' word, and THE end\n"
+    },
+    {
+      "name": "bad top is a usage error",
+      "args": [
+        "many"
+      ],
+      "stdin": "The cat and the hat.\nThe cat's 'quoted' word, and THE end\n"
+    },
+    {
+      "name": "bad minimum length is ignored",
+      "args": [
+        "2",
+        "long"
+      ],
+      "stdin": "The cat and the hat.\nThe cat's 'quoted' word, and THE end\n"
+    },
+    {
+      "name": "empty input",
+      "stdin": ""
+    },
+    {
+      "name": "punctuation only",
+      "stdin": "--- !!! ''' ...\n"
+    },
+    {
+      "name": "apostrophes and digits",
+      "args": [
+        "10"
+      ],
+      "stdin": "rock'n'roll 'tis o'clock 2024 r2d2 'a' ''\n"
+    },
+    {
+      "name": "no trailing newline",
+      "args": [
+        "10"
+      ],
+      "stdin": "last line without newline"
+    },
+    {
+      "name": "top one",
+      "args": [
+        "1"
+      ],
+      "stdin": "a b b\n"
+    },
+    {
+      "name": "letters at the edges of the alphabet",
+      "args": [
+        "10"
+      ],
+      "stdin": "Zebra AZ za zz aa Aa\n"
+    },
+    {
+      "name": "letters outside ASCII split words",
+      "args": [
+        "10"
+      ],
+      "stdin": "caf\u00e9 na\u00efve \u00d6lwechsel \u6771\u4eac stra\u00dfe\n"
+    }
+  ]
+}

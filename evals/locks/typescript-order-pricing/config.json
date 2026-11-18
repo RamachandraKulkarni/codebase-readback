@@ -1,0 +1,6 @@
+{
+  "adapter": "typescript",
+  "targets": ["src/**/*.ts"],
+  "frozen": ["test/**"],
+  "surface": {"entries": ["src/index.ts"]}
+}

@@ -1,0 +1,314 @@
+{
+  "command": [
+    "bash",
+    "publish-build.sh"
+  ],
+  "copy": [
+    "publish-build.sh"
+  ],
+  "env": {
+    "DEPLOY_API": "https://deploy.example.test/api",
+    "DEPLOY_TOKEN": "test-token",
+    "POLL_SECONDS": "0"
+  },
+  "stubs": {
+    "sleep": {}
+  },
+  "scenarios": [
+    {
+      "name": "published after one pending check",
+      "args": [
+        "--env",
+        "staging",
+        "--version",
+        "1.4.0",
+        "--artifact",
+        "build.tar.gz"
+      ],
+      "files": {
+        "build.tar.gz": "hello\n"
+      },
+      "stubs": {
+        "curl": {
+          "responses": [
+            {
+              "stdout": "{\"id\": \"b-42\"}"
+            },
+            {
+              "stdout": "{\"state\": \"pending\"}"
+            },
+            {
+              "stdout": "{\"state\": \"verified\"}"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "production with prerelease version and messy file name",
+      "args": [
+        "--env",
+        "production",
+        "--version",
+        "2.0.0-rc.1",
+        "--artifact",
+        "My Build_V2 (final).tgz"
+      ],
+      "files": {
+        "My Build_V2 (final).tgz": "binary-ish\u0001content"
+      },
+      "stubs": {
+        "curl": {
+          "responses": [
+            {
+              "stdout": "{\"id\": \"b-7\"}"
+            },
+            {
+              "stdout": "{\"state\": \"verified\"}"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "long artifact name is cut to 40 characters",
+      "args": [
+        "--env",
+        "staging",
+        "--version",
+        "1.4.0",
+        "--artifact",
+        "Quarterly Reconciliation Service Nightly Build 2026-11.tar.gz"
+      ],
+      "files": {
+        "Quarterly Reconciliation Service Nightly Build 2026-11.tar.gz": "x"
+      },
+      "stubs": {
+        "curl": {
+          "responses": [
+            {
+              "stdout": "{\"id\": \"b-9\"}"
+            },
+            {
+              "stdout": "{\"state\": \"verified\"}"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "arguments in another order",
+      "args": [
+        "--artifact",
+        "build.tar.gz",
+        "--version",
+        "1.4.0",
+        "--env",
+        "production"
+      ],
+      "files": {
+        "build.tar.gz": "hello\n"
+      },
+      "stubs": {
+        "curl": {
+          "responses": [
+            {
+              "stdout": "{\"id\": \"b-42\"}"
+            },
+            {
+              "stdout": "{\"state\": \"verified\"}"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "rejected by the service",
+      "args": [
+        "--env",
+        "staging",
+        "--version",
+        "1.4.0",
+        "--artifact",
+        "build.tar.gz"
+      ],
+      "files": {
+        "build.tar.gz": "hello\n"
+      },
+      "stubs": {
+        "curl": {
+          "responses": [
+            {
+              "stdout": "{\"id\": \"b-42\"}"
+            },
+            {
+              "stdout": "{\"state\": \"rejected\"}"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "still pending after five checks",
+      "args": [
+        "--env",
+        "staging",
+        "--version",
+        "1.4.0",
+        "--artifact",
+        "build.tar.gz"
+      ],
+      "files": {
+        "build.tar.gz": "hello\n"
+      },
+      "stubs": {
+        "curl": {
+          "responses": [
+            {
+              "stdout": "{\"id\": \"b-42\"}"
+            },
+            {
+              "stdout": "{\"state\": \"pending\"}"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "status request failures count as pending (known)",
+      "args": [
+        "--env",
+        "staging",
+        "--version",
+        "1.4.0",
+        "--artifact",
+        "build.tar.gz"
+      ],
+      "files": {
+        "build.tar.gz": "hello\n"
+      },
+      "stubs": {
+        "curl": {
+          "responses": [
+            {
+              "stdout": "{\"id\": \"b-42\"}"
+            },
+            {
+              "exit": 22,
+              "stderr": "curl: (22) 503"
+            },
+            {
+              "exit": 22
+            },
+            {
+              "stdout": "{\"state\": \"verified\"}"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "failed registration still publishes (known bug)",
+      "args": [
+        "--env",
+        "staging",
+        "--version",
+        "1.4.0",
+        "--artifact",
+        "build.tar.gz"
+      ],
+      "files": {
+        "build.tar.gz": "hello\n"
+      },
+      "stubs": {
+        "curl": {
+          "responses": [
+            {
+              "exit": 22,
+              "stderr": "curl: (22) The requested URL returned error: 500"
+            },
+            {
+              "stdout": "{\"state\": \"verified\"}"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "no arguments",
+      "args": []
+    },
+    {
+      "name": "unknown option",
+      "args": [
+        "--force"
+      ]
+    },
+    {
+      "name": "option without value",
+      "args": [
+        "--version",
+        "1.0.0",
+        "--artifact",
+        "build.tar.gz",
+        "--env"
+      ],
+      "files": {
+        "build.tar.gz": "hello\n"
+      }
+    },
+    {
+      "name": "unknown environment",
+      "args": [
+        "--env",
+        "dev",
+        "--version",
+        "1.0.0",
+        "--artifact",
+        "build.tar.gz"
+      ],
+      "files": {
+        "build.tar.gz": "hello\n"
+      }
+    },
+    {
+      "name": "build metadata refused",
+      "args": [
+        "--env",
+        "staging",
+        "--version",
+        "1.0.0+build.5",
+        "--artifact",
+        "build.tar.gz"
+      ],
+      "files": {
+        "build.tar.gz": "hello\n"
+      }
+    },
+    {
+      "name": "missing artifact file",
+      "args": [
+        "--env",
+        "staging",
+        "--version",
+        "1.0.0",
+        "--artifact",
+        "nowhere.zip"
+      ]
+    },
+    {
+      "name": "upper case prerelease refused",
+      "args": [
+        "--env",
+        "staging",
+        "--version",
+        "1.0.0-RC1",
+        "--artifact",
+        "build.tar.gz"
+      ],
+      "files": {
+        "build.tar.gz": "hello\n"
+      }
+    }
+  ]
+}

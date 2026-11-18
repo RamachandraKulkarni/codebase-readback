@@ -1,0 +1,50 @@
+[
+  {
+    "name": "round tax with Math.round",
+    "file": "src/pricing.ts",
+    "find": "return roundHalfToEven(taxableCents * TAX_RATE);",
+    "replace": "return Math.round(taxableCents * TAX_RATE);"
+  },
+  {
+    "name": "tier applies only above its threshold",
+    "file": "src/pricing.ts",
+    "find": "tier.minimumSubtotalCents <= subtotalCents",
+    "replace": "tier.minimumSubtotalCents < subtotalCents"
+  },
+  {
+    "name": "ACME minimum taken before the coupon is added",
+    "file": "src/pricing.ts",
+    "find": "  const discountCents = calculateVolumeDiscountCents(subtotalCents) + couponDiscountCents;\n  if (ACME_CUSTOMER_ID === order.customerId) {\n    return Math.max(discountCents, Math.round(subtotalCents * ACME_MINIMUM_DISCOUNT_RATE));\n  }\n  return discountCents;",
+    "replace": "  const volumeDiscountCents = calculateVolumeDiscountCents(subtotalCents);\n  if (ACME_CUSTOMER_ID === order.customerId) {\n    return Math.max(volumeDiscountCents, Math.round(subtotalCents * ACME_MINIMUM_DISCOUNT_RATE)) + couponDiscountCents;\n  }\n  return volumeDiscountCents + couponDiscountCents;"
+  },
+  {
+    "name": "quantity check drops Number.isInteger",
+    "file": "src/pricing.ts",
+    "find": "return \"number\" === typeof value && Number.isInteger(value) && 0 < value;",
+    "replace": "return \"number\" === typeof value && 0 < value;"
+  },
+  {
+    "name": "coupon bug fixed in the same run",
+    "file": "src/pricing.ts",
+    "find": "if (taxableCents < 0) return 0;",
+    "replace": "if (taxableCents < 0) throw new Error(\"coupon exceeds the order\");"
+  },
+  {
+    "name": "public type field renamed",
+    "file": "src/types.ts",
+    "find": "couponPercent?: number",
+    "replace": "couponPct?: number"
+  },
+  {
+    "name": "dollars formatted with toLocaleString",
+    "file": "src/pricing.ts",
+    "find": "return `$${(cents / 100).toFixed(2)}`;",
+    "replace": "return `$${(cents / 100).toLocaleString(\"en-US\", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;"
+  },
+  {
+    "name": "JSON errors wrapped in a friendlier message",
+    "file": "src/pricing.ts",
+    "find": "const unvalidatedOrder: UnvalidatedOrder = JSON.parse(rawOrderJson);",
+    "replace": "let unvalidatedOrder: UnvalidatedOrder;\n  try {\n    unvalidatedOrder = JSON.parse(rawOrderJson);\n  } catch {\n    throw new Error(\"order is not valid JSON\");\n  }"
+  }
+]

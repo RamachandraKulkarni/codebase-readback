@@ -1,0 +1,44 @@
+[
+  {
+    "name": "failed status request no longer treated as pending",
+    "file": "publish-build.sh",
+    "find": "build_state=$(fetch_build_state) || build_state=pending",
+    "replace": "build_state=$(fetch_build_state)"
+  },
+  {
+    "name": "registration bug fixed in the same run",
+    "file": "publish-build.sh",
+    "find": "  export BUILD_ID=$(curl",
+    "replace": "  BUILD_ID=$(curl"
+  },
+  {
+    "name": "one status check too many",
+    "file": "publish-build.sh",
+    "find": "(( status_check_count < MAX_STATUS_CHECKS ))",
+    "replace": "(( status_check_count <= MAX_STATUS_CHECKS ))"
+  },
+  {
+    "name": "slug no longer cut to 40 characters",
+    "file": "publish-build.sh",
+    "find": "    | sed 's/^-*//; s/-*$//' \\\n    | cut -c1-40",
+    "replace": "    | sed 's/^-*//; s/-*$//'"
+  },
+  {
+    "name": "upper case allowed in prerelease",
+    "file": "publish-build.sh",
+    "find": "(-[a-z0-9.]+)?$'",
+    "replace": "(-[a-zA-Z0-9.]+)?$'"
+  },
+  {
+    "name": "verify row added before the wait",
+    "file": "publish-build.sh",
+    "find": "  register_build\n  wait_until_verified",
+    "replace": "  add_summary_row \"verify\" \"ok\" \"pending\"\n  register_build\n  wait_until_verified"
+  },
+  {
+    "name": "usage message goes to stdout",
+    "file": "publish-build.sh",
+    "find": "      *) echo \"$USAGE\" >&2; exit 1 ;;",
+    "replace": "      *) echo \"$USAGE\"; exit 1 ;;"
+  }
+]

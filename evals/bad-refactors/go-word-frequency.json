@@ -1,0 +1,41 @@
+[
+  {
+    "name": "letters checked with unicode.IsLetter",
+    "edits": [
+      {
+        "file": "main.go",
+        "find": "\tisLetter := 'a' <= character && character <= 'z' || 'A' <= character && character <= 'Z'",
+        "replace": "\tisLetter := unicode.IsLetter(character)"
+      },
+      {
+        "file": "main.go",
+        "find": "\t\"strings\"\n)",
+        "replace": "\t\"strings\"\n\t\"unicode\"\n)"
+      }
+    ]
+  },
+  {
+    "name": "ties no longer broken alphabetically",
+    "file": "main.go",
+    "find": "\t\tif rankedWords[left].count == rankedWords[right].count {\n\t\t\treturn rankedWords[left].word < rankedWords[right].word\n\t\t}\n",
+    "replace": ""
+  },
+  {
+    "name": "bad minimum length becomes a usage error",
+    "file": "main.go",
+    "find": "\t\tif requestedMinLength, err := strconv.Atoi(arguments[1]); nil == err {\n\t\t\tminLength = requestedMinLength\n\t\t}",
+    "replace": "\t\trequestedMinLength, err := strconv.Atoi(arguments[1])\n\t\tif nil != err {\n\t\t\tfmt.Fprintln(os.Stderr, usage)\n\t\t\tos.Exit(2)\n\t\t}\n\t\tminLength = requestedMinLength"
+  },
+  {
+    "name": "split on whitespace only",
+    "file": "main.go",
+    "find": "strings.FieldsFunc(text, isWordSeparator)",
+    "replace": "strings.Fields(text)"
+  },
+  {
+    "name": "zero top count accepted",
+    "file": "main.go",
+    "find": "if 0 < requestedTopCount {",
+    "replace": "if 0 <= requestedTopCount {"
+  }
+]

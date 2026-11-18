@@ -1,0 +1,5 @@
+{
+  "adapter": "gitlab-ci",
+  "targets": [".gitlab-ci.yml"],
+  "checks": {"pipeline": ".gitlab-ci.yml"}
+}

@@ -1,0 +1,44 @@
+[
+  {
+    "name": "mutable default bug fixed in the same run",
+    "file": "reminders.py",
+    "find": "    reminders = _build_reminders(json.loads(raw_json), today, _skipped_invoice_ids_from_every_run)\n    return format_csv(reminders), _skipped_invoice_ids_from_every_run",
+    "replace": "    skipped_invoice_ids = []\n    reminders = _build_reminders(json.loads(raw_json), today, skipped_invoice_ids)\n    return format_csv(reminders), skipped_invoice_ids"
+  },
+  {
+    "name": "gentle ends one day early",
+    "file": "reminders.py",
+    "find": "if days_overdue <= GENTLE_UNTIL_DAYS_OVERDUE:",
+    "replace": "if days_overdue < GENTLE_UNTIL_DAYS_OVERDUE:"
+  },
+  {
+    "name": "months counted as whole months plus one",
+    "file": "reminders.py",
+    "find": "months_started = math.ceil(days_overdue / DAYS_PER_BILLING_MONTH)",
+    "replace": "months_started = days_overdue // DAYS_PER_BILLING_MONTH + 1"
+  },
+  {
+    "name": "Springfield override moved before the late fee",
+    "file": "reminders.py",
+    "find": "    level = _reminder_level_for(days_overdue)\n    amount_due = invoice[\"amount\"]\n    if \"final\" == level:\n        amount_due = _add_late_fee(amount_due, days_overdue)\n    # Reported, kept: the override comes after the late fee, so a gentle reminder can carry one.\n    if SPRINGFIELD_CUSTOMER == invoice.get(\"customer\"):\n        level = \"gentle\"",
+    "replace": "    level = _reminder_level_for(days_overdue)\n    if SPRINGFIELD_CUSTOMER == invoice.get(\"customer\"):\n        level = \"gentle\"\n    amount_due = invoice[\"amount\"]\n    if \"final\" == level:\n        amount_due = _add_late_fee(amount_due, days_overdue)"
+  },
+  {
+    "name": "paid checked by truthiness",
+    "file": "reminders.py",
+    "find": "if True == invoice.get(\"paid\"):",
+    "replace": "if invoice.get(\"paid\"):"
+  },
+  {
+    "name": "public parameter renamed",
+    "file": "reminders.py",
+    "find": "def format_csv(res):",
+    "replace": "def format_csv(reminders):\n    res = reminders"
+  },
+  {
+    "name": "null entries no longer ignored",
+    "file": "reminders.py",
+    "find": "        if None is invoice:\n            continue\n",
+    "replace": ""
+  }
+]

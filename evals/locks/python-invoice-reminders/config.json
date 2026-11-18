@@ -1,0 +1,6 @@
+{
+  "adapter": "python",
+  "targets": ["reminders.py"],
+  "frozen": ["tests/**"],
+  "surface": {"entries": ["reminders.py"], "names": ["run", "format_csv"]}
+}

@@ -1,0 +1,11 @@
+{
+  "adapter": "java",
+  "targets": ["src/main/java/**/*.java"],
+  "frozen": ["readback-test/**"],
+  "surface": {"entries": ["com.example.csvimport.CsvImportService", "com.example.csvimport.CustomerStore", "com.example.csvimport.AuditLog", "com.example.csvimport.Customer", "com.example.csvimport.ImportResult"]},
+  "checks": {
+    "compile": "rm -rf .readback/classes && javac -nowarn -d .readback/classes $(find src/main/java readback-test -name '*.java')",
+    "tests": null,
+    "scenarios": "readback-test/scenarios.json"
+  }
+}

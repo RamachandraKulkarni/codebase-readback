@@ -1,0 +1,32 @@
+[
+  {
+    "name": "build rule tightened to main and a tag",
+    "file": ".gitlab-ci.yml",
+    "find": "$CI_COMMIT_BRANCH == \"main\" || $RELEASE_TAG != \"\"",
+    "replace": "$CI_COMMIT_BRANCH == \"main\" && $RELEASE_TAG != \"\""
+  },
+  {
+    "name": "manual moved onto staging too",
+    "file": ".gitlab-ci.yml",
+    "find": "    - if: $DEPLOY_ENV == \"staging\"\n",
+    "replace": "    - if: $DEPLOY_ENV == \"staging\"\n  when: manual\n"
+  },
+  {
+    "name": "build job inherits the default image",
+    "file": ".gitlab-ci.yml",
+    "find": "  stage: build\n  image: docker:27\n",
+    "replace": "  stage: build\n"
+  },
+  {
+    "name": "job renamed to one naming style",
+    "file": ".gitlab-ci.yml",
+    "find": "build_image-job:",
+    "replace": "build-image-job:"
+  },
+  {
+    "name": "staging needs dropped as unnecessary",
+    "file": ".gitlab-ci.yml",
+    "find": "  image: alpine:3.20\n  needs: [build_image-job]\n  rules:\n    - if: $DEPLOY_ENV == \"staging\"",
+    "replace": "  image: alpine:3.20\n  rules:\n    - if: $DEPLOY_ENV == \"staging\""
+  }
+]

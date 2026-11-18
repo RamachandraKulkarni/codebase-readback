@@ -1,0 +1,40 @@
+{
+  "command": [
+    "java",
+    "-cp",
+    ".readback/classes",
+    "com.example.csvimport.CharacterizationDriver"
+  ],
+  "copy": [
+    ".readback/classes"
+  ],
+  "scenarios": [
+    {
+      "name": "rows",
+      "args": [
+        "rows"
+      ]
+    },
+    {
+      "name": "errors",
+      "args": [
+        "errors"
+      ]
+    },
+    {
+      "name": "store",
+      "args": [
+        "store"
+      ]
+    },
+    {
+      "name": "demo",
+      "command": [
+        "java",
+        "-cp",
+        ".readback/classes",
+        "com.example.csvimport.Demo"
+      ]
+    }
+  ]
+}
