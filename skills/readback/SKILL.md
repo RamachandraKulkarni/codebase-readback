@@ -78,7 +78,7 @@ After each pass, run `verify`. `LOCK HELD` is the only way forward. On `LOCK BRO
 2. **Structural.** Unpack packed code, flatten nesting, name the steps, extract or inline, group what changes together. Follow the `software-design` skill if it is installed.
 3. **Boundary.** Types, outcome values in place of flags, parsing where outside data arrives. Only where callers see nothing new.
 
-Equivalences that are not equivalent, all caught in this repo's evals:
+Look-alikes that are not equivalent. The evals caught some; the rest came up while writing the reference rewrites:
 
 - `trim().isEmpty()` versus `isBlank()`
 - `echo "$x"` versus `printf '%s\n' "$x"`
