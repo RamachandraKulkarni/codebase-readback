@@ -1,0 +1,33 @@
+{
+  "name": "shell",
+  "description": "Bash and POSIX shell. Behavior locked by recorded scenarios with stubbed commands.",
+  "detect": {
+    "extensions": [
+      ".sh",
+      ".bash"
+    ],
+    "marker_files": []
+  },
+  "surface": {
+    "extractor": "none"
+  },
+  "frozen": [],
+  "checks": {
+    "compile": "bash -n {targets}"
+  },
+  "mutation": {
+    "operators": "shell",
+    "line_comments": [
+      "#"
+    ],
+    "block_comments": [],
+    "comment_word_boundary": true,
+    "quotes": [
+      "\"",
+      "'"
+    ],
+    "single_quote_escapes": false,
+    "deletable_line": "^\\s*(?!(?:if|then|else|elif|fi|for|while|until|do|done|case|esac|function|return|exit|local|declare|readonly|export|set|trap|shift|source)\\b)[\\w./$-][^=]*[^\\\\{(;)]$",
+    "deleted_line": ":"
+  }
+}

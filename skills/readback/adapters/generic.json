@@ -1,0 +1,37 @@
+{
+  "name": "generic",
+  "description": "Any other language. Surface from tree-sitter definitions; behavior from tests or recorded scenarios.",
+  "detect": {
+    "extensions": [],
+    "marker_files": []
+  },
+  "surface": {
+    "extractor": "tree-sitter",
+    "language": "",
+    "entries": [],
+    "names": []
+  },
+  "frozen": [],
+  "checks": {},
+  "mutation": {
+    "operators": "c-like",
+    "line_comments": [
+      "//",
+      "#"
+    ],
+    "block_comments": [
+      [
+        "/*",
+        "*/"
+      ]
+    ],
+    "comment_word_boundary": true,
+    "quotes": [
+      "\"",
+      "'"
+    ],
+    "single_quote_escapes": true,
+    "deletable_line": null,
+    "deleted_line": ""
+  }
+}

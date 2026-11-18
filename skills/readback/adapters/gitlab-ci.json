@@ -1,0 +1,29 @@
+{
+  "name": "gitlab-ci",
+  "description": "GitLab CI files. Behavior locked by evaluating every job's rules across the trigger matrix.",
+  "detect": {
+    "extensions": [],
+    "marker_files": [
+      ".gitlab-ci.yml"
+    ]
+  },
+  "surface": {
+    "extractor": "none"
+  },
+  "frozen": [],
+  "checks": {
+    "pipeline": ".gitlab-ci.yml"
+  },
+  "mutation": {
+    "operators": "gitlab-ci",
+    "line_comments": [
+      "#"
+    ],
+    "block_comments": [],
+    "comment_word_boundary": true,
+    "quotes": [],
+    "single_quote_escapes": false,
+    "deletable_line": "^\\s+- (?!if:)\\S.*$",
+    "deleted_line": ""
+  }
+}

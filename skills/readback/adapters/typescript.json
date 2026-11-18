@@ -1,0 +1,58 @@
+{
+  "name": "typescript",
+  "description": "TypeScript and JavaScript. Surface from the TypeScript compiler API.",
+  "detect": {
+    "extensions": [
+      ".ts",
+      ".tsx",
+      ".mts",
+      ".cts",
+      ".js",
+      ".jsx",
+      ".mjs",
+      ".cjs"
+    ],
+    "marker_files": [
+      "tsconfig.json",
+      "package.json"
+    ]
+  },
+  "surface": {
+    "extractor": "typescript",
+    "entries": []
+  },
+  "frozen": [
+    "**/*.test.*",
+    "**/*.spec.*",
+    "**/__tests__/**"
+  ],
+  "checks": {
+    "compile": "npx --no-install tsc --noEmit -p .",
+    "tests": {
+      "command": "npx --no-install vitest run --reporter=junit --outputFile=.readback/junit/vitest.xml",
+      "junit": ".readback/junit/*.xml"
+    }
+  },
+  "mutation": {
+    "operators": "c-like",
+    "line_comments": [
+      "//"
+    ],
+    "block_comments": [
+      [
+        "/*",
+        "*/"
+      ]
+    ],
+    "comment_word_boundary": false,
+    "quotes": [
+      "\"",
+      "'",
+      "`"
+    ],
+    "single_quote_escapes": true,
+    "deletable_line": "^\\s*(?!(?:return|if|for|while|switch|case|else|const|let|var|function|class|throw|import|export|public|private|protected|static|final|try|catch|do|new|super|this\\(|default|break|continue|yield)\\b)[\\w$.]+(?:\\[[^\\]]*\\])?(?:\\s*[-+*/]?=\\s*.+|\\(.*\\)(?:\\.[\\w$]+\\(.*\\))*);\\s*$",
+    "deleted_line": "",
+    "native_command": "npx --no-install stryker run"
+  }
+}

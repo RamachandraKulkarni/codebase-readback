@@ -1,0 +1,48 @@
+{
+  "name": "python",
+  "description": "Python. Surface from the standard library ast module.",
+  "detect": {
+    "extensions": [
+      ".py"
+    ],
+    "marker_files": [
+      "pyproject.toml",
+      "setup.py",
+      "setup.cfg"
+    ]
+  },
+  "surface": {
+    "extractor": "python",
+    "entries": []
+  },
+  "frozen": [
+    "tests/**",
+    "**/test_*.py",
+    "**/*_test.py"
+  ],
+  "checks": {
+    "compile": "python3 -m py_compile {targets}",
+    "tests": {
+      "command": "python3 -m pytest -q -p no:cacheprovider --junitxml=.readback/junit/pytest.xml",
+      "junit": ".readback/junit/*.xml"
+    }
+  },
+  "mutation": {
+    "operators": "python",
+    "line_comments": [
+      "#"
+    ],
+    "block_comments": [],
+    "comment_word_boundary": false,
+    "quotes": [
+      "\"\"\"",
+      "'''",
+      "\"",
+      "'"
+    ],
+    "single_quote_escapes": true,
+    "deletable_line": "^\\s*(?!(?:return|if|elif|else|for|while|def|class|import|from|with|try|except|finally|raise|pass|yield|assert|global|nonlocal|lambda|async|await|del|break|continue|match|case)\\b)[\\w.]+(?:\\[[^\\]]*\\])?(?:\\s*[-+*/]?=(?!=)\\s*.+|\\(.*\\))\\s*$",
+    "deleted_line": "pass",
+    "native_command": "mutmut run"
+  }
+}

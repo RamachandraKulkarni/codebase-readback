@@ -1,0 +1,51 @@
+{
+  "name": "java",
+  "description": "Java with Maven. Surface from javap -public on freshly compiled classes.",
+  "detect": {
+    "extensions": [
+      ".java"
+    ],
+    "marker_files": [
+      "pom.xml",
+      "build.gradle",
+      "build.gradle.kts"
+    ]
+  },
+  "surface": {
+    "extractor": "java",
+    "sources": [
+      "src/main/java/**/*.java"
+    ],
+    "entries": []
+  },
+  "frozen": [
+    "src/test/**"
+  ],
+  "checks": {
+    "compile": "mvn -q -o compile",
+    "tests": {
+      "command": "mvn -q -o test",
+      "junit": "target/surefire-reports/TEST-*.xml"
+    }
+  },
+  "mutation": {
+    "operators": "c-like",
+    "line_comments": [
+      "//"
+    ],
+    "block_comments": [
+      [
+        "/*",
+        "*/"
+      ]
+    ],
+    "comment_word_boundary": false,
+    "quotes": [
+      "\""
+    ],
+    "single_quote_escapes": true,
+    "deletable_line": "^\\s*(?!(?:return|if|for|while|switch|case|else|const|let|var|function|class|throw|import|export|public|private|protected|static|final|try|catch|do|new|super|this\\(|default|break|continue|yield)\\b)[\\w$.]+(?:\\[[^\\]]*\\])?(?:\\s*[-+*/]?=\\s*.+|\\(.*\\)(?:\\.[\\w$]+\\(.*\\))*);\\s*$",
+    "deleted_line": "",
+    "native_command": "mvn -o org.pitest:pitest-maven:mutationCoverage"
+  }
+}
