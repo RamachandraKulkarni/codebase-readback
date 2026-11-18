@@ -1,0 +1,168 @@
+{
+  "surface": [
+    "reminders.py: run and format_csv"
+  ],
+  "entries": [
+    {
+      "file": "reminders.py",
+      "match": "DEBUG = False",
+      "group": "Too much",
+      "action": "fix",
+      "why": "A setting nothing reads"
+    },
+    {
+      "file": "reminders.py",
+      "match": "class ReminderManager:",
+      "group": "Too much",
+      "action": "fix",
+      "why": "A class whose only state is filled behind a flag that every caller sets to False"
+    },
+    {
+      "file": "reminders.py",
+      "match": "if flag:",
+      "group": "Too much",
+      "action": "fix",
+      "why": "An option that only ever has one value: run passes False"
+    },
+    {
+      "file": "reminders.py",
+      "match": "def helper(self, s):",
+      "group": "Too much",
+      "action": "fix",
+      "why": "Nothing calls it"
+    },
+    {
+      "file": "reminders.py",
+      "match": "def old_format(res):",
+      "group": "Too much",
+      "action": "fix",
+      "why": "Nothing calls it and nothing imports it"
+    },
+    {
+      "file": "reminders.py",
+      "match": "msg = \"Invoice \" + str(d[\"id\"])",
+      "group": "Too packed",
+      "action": "fix",
+      "why": "A message built by hand from pieces, with a ternary inside"
+    },
+    {
+      "file": "reminders.py",
+      "match": "months = x // 30 + (1 if x % 30 > 0 else 0)",
+      "group": "Too packed",
+      "action": "fix",
+      "why": "Arithmetic whose meaning, months started, is not on the page"
+    },
+    {
+      "file": "reminders.py",
+      "match": "def process(self, data, flag=False, today=None, skipped=[]):",
+      "group": "Names",
+      "action": "fix",
+      "why": "data and flag say nothing about the use"
+    },
+    {
+      "file": "reminders.py",
+      "match": "x = (today - dt).days",
+      "group": "Names",
+      "action": "fix",
+      "why": "A single letter for days overdue"
+    },
+    {
+      "file": "reminders.py",
+      "match": "amt = d[\"amount\"]",
+      "group": "Names",
+      "action": "fix",
+      "why": "Abbreviated names, and d for an invoice"
+    },
+    {
+      "file": "reminders.py",
+      "match": "LATE_FEE = 0.015",
+      "group": "Names",
+      "action": "fix",
+      "why": "The name hides that the fee is per month started"
+    },
+    {
+      "file": "reminders.py",
+      "match": "if \"due\" in d:",
+      "group": "Flow",
+      "action": "fix",
+      "why": "Nesting six levels deep; the cases that end early belong at the top"
+    },
+    {
+      "file": "reminders.py",
+      "match": "out = out + str(r[\"id\"])",
+      "group": "Flow",
+      "action": "fix",
+      "why": "A loop that collects text by hand"
+    },
+    {
+      "file": "reminders.py",
+      "match": "except:",
+      "group": "Errors",
+      "action": "report",
+      "why": "A bare except catches every error, not only a bad date"
+    },
+    {
+      "file": "reminders.py",
+      "match": "skipped=[]",
+      "group": "Errors",
+      "action": "report",
+      "why": "A mutable default: skipped ids pile up across calls, so a second run reports duplicates"
+    },
+    {
+      "file": "reminders.py",
+      "match": "if d.get(\"customer\") == \"City of Springfield\":",
+      "group": "Special cases",
+      "action": "count",
+      "why": "An if for one customer"
+    },
+    {
+      "file": "reminders.py",
+      "match": "amt = round(amt + amt * LATE_FEE * months, 2)",
+      "group": "Errors",
+      "action": "report",
+      "why": "City of Springfield is moved to a gentle reminder after the late fee is added, so a gentle reminder can carry a late fee"
+    },
+    {
+      "file": "reminders.py",
+      "match": "# Process the invoices",
+      "group": "Comments",
+      "action": "fix",
+      "why": "Says what the code says"
+    },
+    {
+      "file": "reminders.py",
+      "match": "# Updated per call with finance",
+      "group": "Comments",
+      "action": "fix",
+      "why": "A note about the conversation that produced the code"
+    },
+    {
+      "file": "reminders.py",
+      "match": "# Helper to clean a string",
+      "group": "Comments",
+      "action": "fix",
+      "why": "Says what the name says, on dead code"
+    },
+    {
+      "file": "reminders.py",
+      "match": "# Settings",
+      "group": "Comments",
+      "action": "fix",
+      "why": "A banner"
+    },
+    {
+      "file": "reminders.py",
+      "match": "# The accounting export writes due dates",
+      "group": "Leave alone",
+      "action": "leave",
+      "why": "A comment about a system outside the code"
+    },
+    {
+      "file": "reminders.py",
+      "match": "if d != None:",
+      "group": "Leave alone",
+      "action": "leave",
+      "why": "The input can hold null entries; the check sits where outside data arrives, only its spelling may change"
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+# This file is a template, and might need editing before it works on your project.
+# To contribute improvements to CI/CD templates, please follow the Development guide at:
+# https://docs.gitlab.com/ee/development/cicd/templates.html
+variables:
+  APP_NAME: "orders-api"
+#  REGISTRY: "registry.old.example.com"
+  REGISTRY: "registry.example.com"
+  DEPLOY_ENV: ""
+  RELEASE_TAG: ""
+
+stages:          # List of stages for jobs, and their order of execution
+  - test
+  - build
+  - deploy
+
+image: node:22
+
+unit-test-job:
+  stage: test
+  image: node:22
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH == "main"
+  script:
+    - npm ci
+    - npm test
+
+build_image-job:
+  stage: build
+  image: docker:27
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main" || $RELEASE_TAG != ""'
+  script:
+#    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $REGISTRY
+    - docker build -t $REGISTRY/$APP_NAME:$CI_COMMIT_SHORT_SHA .
+    - docker push $REGISTRY/$APP_NAME:$CI_COMMIT_SHORT_SHA
+  artifacts:
+    paths: [ image-digest.txt ]
+
+deploy-staging:
+    stage: deploy
+    image: alpine:3.20
+    needs: ["build_image-job"]
+    rules:
+      - if: $DEPLOY_ENV == "staging"
+    before_script:
+      ##
+      ## Install the deploy tools
+      ##
+      - apk add --no-cache curl
+    script:
+      # The deploy hook only accepts form-encoded bodies, not JSON
+      - curl -X POST https://deploy.example.com/hooks/staging -d "image=$REGISTRY/$APP_NAME:$CI_COMMIT_SHORT_SHA"
+
+deploy-production:
+  stage: deploy
+  image: alpine:3.20
+  needs: [build_image-job]
+  rules:
+    - if: $DEPLOY_ENV == "production" && $RELEASE_TAG != ""
+  before_script:
+    - apk add --no-cache curl
+  script:
+    - curl -X POST https://deploy.example.com/hooks/production -d "image=$REGISTRY/$APP_NAME:$CI_COMMIT_SHORT_SHA"
+  when: manual

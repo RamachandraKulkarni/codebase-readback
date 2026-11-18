@@ -1,0 +1,91 @@
+{
+  "surface": [
+    "Job names, stage names and order, trigger variables, and what each job runs for every trigger"
+  ],
+  "entries": [
+    {
+      "file": ".gitlab-ci.yml",
+      "match": "# This file is a template",
+      "group": "Comments",
+      "action": "fix",
+      "why": "A vendor template header that describes some other file"
+    },
+    {
+      "file": ".gitlab-ci.yml",
+      "match": "#  REGISTRY: \"registry.old.example.com\"",
+      "group": "Comments",
+      "action": "fix",
+      "why": "An old value, commented out"
+    },
+    {
+      "file": ".gitlab-ci.yml",
+      "match": "#    - docker login",
+      "group": "Comments",
+      "action": "fix",
+      "why": "A script line, commented out"
+    },
+    {
+      "file": ".gitlab-ci.yml",
+      "match": "# List of stages for jobs",
+      "group": "Comments",
+      "action": "fix",
+      "why": "Says what the YAML says"
+    },
+    {
+      "file": ".gitlab-ci.yml",
+      "match": "## Install the deploy tools",
+      "group": "Comments",
+      "action": "fix",
+      "why": "Says what the next line says"
+    },
+    {
+      "file": ".gitlab-ci.yml",
+      "match": "  image: node:22",
+      "group": "Too much",
+      "action": "fix",
+      "why": "The same image the job would inherit from the default"
+    },
+    {
+      "file": ".gitlab-ci.yml",
+      "match": "deploy-staging:",
+      "group": "Too packed",
+      "action": "fix",
+      "why": "Four-space indent where every other job uses two"
+    },
+    {
+      "file": ".gitlab-ci.yml",
+      "match": "- if: '$CI_COMMIT_BRANCH == \"main\" || $RELEASE_TAG != \"\"'",
+      "group": "Too packed",
+      "action": "fix",
+      "why": "The only quoted rule; one style for every rule"
+    },
+    {
+      "file": ".gitlab-ci.yml",
+      "match": "needs: [\"build_image-job\"]",
+      "group": "Errors",
+      "action": "report",
+      "why": "build_image-job only runs on main or a release tag, so DEPLOY_ENV=staging anywhere else fails pipeline creation"
+    },
+    {
+      "file": ".gitlab-ci.yml",
+      "match": "paths: [ image-digest.txt ]",
+      "group": "Errors",
+      "action": "report",
+      "why": "No script writes image-digest.txt, so the artifact is always missing"
+    },
+    {
+      "file": ".gitlab-ci.yml",
+      "match": "build_image-job:",
+      "group": "Leave alone",
+      "action": "leave",
+      "why": "A job name: needs and API callers use it, even though it mixes _ and -"
+    },
+    {
+      "file": ".gitlab-ci.yml",
+      "match": "# The deploy hook only accepts form-encoded bodies",
+      "group": "Leave alone",
+      "action": "leave",
+      "why": "A comment about a system outside the code"
+    }
+  ]
+}
